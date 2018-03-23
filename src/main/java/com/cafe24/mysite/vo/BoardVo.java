@@ -110,4 +110,11 @@ public class BoardVo {
 		this.password = password;
 	}
 
+	@Override
+	public String toString() {
+		return "BoardVo [maxNo=" + maxNo + ", no=" + no + ", title=" + title + ", content=" + content + ", groupNo="
+				+ groupNo + ", orderNo=" + orderNo + ", depth=" + depth + ", curDate=" + curDate + ", hit=" + hit
+				+ ", user=" + user + ", userNo=" + userNo + ", password=" + password + "]";
+	}
+
 }

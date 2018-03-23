@@ -8,10 +8,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cafe24.mysite.vo.CommentVo;
-import com.cafe24.mysite.vo.GuestbookVo;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+import com.cafe24.mysite.vo.CommentVo;
+
+@Repository
 public class CommentDao {
+
+	@Autowired
+	private SqlSession sqlSession;
+
 	public boolean delete(CommentVo vo) {
 		boolean result = false;
 
@@ -50,101 +58,15 @@ public class CommentDao {
 	}
 
 	public boolean insert(CommentVo vo) {
-		boolean result = false;
+		int count = sqlSession.insert("comment.write", vo);
 
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-
-		try {
-			conn = getConnection();
-			String sql = "insert into comment values(null, ?, ?, ?, now(), ?)";
-
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, vo.getName());
-			pstmt.setString(2, vo.getPassword());
-			pstmt.setString(3, vo.getContent());
-			pstmt.setLong(4, vo.getBoardNo());
-
-			int count = pstmt.executeUpdate();
-			result = (count == 1);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-		}
-
-		return result;
+		return count == 1;
 	}
 
 	public List<CommentVo> GetList(Long inputBoardNo) {
-		List<CommentVo> list = new ArrayList<>();
 
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+		return sqlSession.selectList("comment.getList", inputBoardNo);
 
-		try {
-			conn = getConnection();
-
-			String sql = "select no, name, password, content, reg_date, board_no from comment where board_no = ?";
-
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setLong(1, inputBoardNo);
-
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				Long no = rs.getLong(1);
-				String name = rs.getString(2);
-				String password = rs.getString(3);
-				String content = rs.getString(4);
-				String curDate = rs.getString(5);
-				Long boardNo = rs.getLong(6);
-
-				CommentVo vo = new CommentVo();
-
-				vo.setNo(no);
-				vo.setIndex((long) list.size() + 1);
-				vo.setName(name);
-				vo.setPassword(password);
-				vo.setContent(content);
-				vo.setCurDate(curDate);
-				vo.setBoardNo(boardNo);
-
-				list.add(vo);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-		}
-
-		return list;
 	}
 
 	private Connection getConnection() throws SQLException {

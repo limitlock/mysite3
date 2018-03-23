@@ -8,22 +8,20 @@ import com.cafe24.mysite.vo.UserVo;
 
 @Service
 public class UserService {
+
 	@Autowired
 	private UserDao userDao;
 
 	public void join(UserVo vo) {
 		userDao.insert(vo);
-
 	}
 
 	public UserVo getUser(UserVo vo) {
-
-		return userDao.get(vo.getEmail(), vo.getPassword());
+		return userDao.get(vo);
 
 	}
 
 	public void modify(UserVo vo) {
-		// TODO Auto-generated method stub
 		userDao.update(vo);
 	}
 

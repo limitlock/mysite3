@@ -41,7 +41,7 @@
 					<c:forEach items="${list }" var="vo" varStatus="status">
 							<table>
 								<tr>
-									<td>[${status.count-index }]</td>
+									<td>[${count - status.count+1 }]</td> 
 									<td>${vo.name }</td>
 									<td>${vo.curDate }</td>
 									<td><a href="${pageContext.servletContext.contextPath }/guestbook/delete?no=${vo.no}">삭제</a></td>

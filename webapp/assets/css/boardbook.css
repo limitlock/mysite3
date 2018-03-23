@@ -1,0 +1,29 @@
+@CHARSET "UTF-8";
+@import "mysite.css";
+
+#boardbook			{ margin:20px auto;	width:540px; }
+
+#boardbook form, 
+#boardbook table	{ width:100% }
+
+#boardbook table,	
+#boardbook table td { border:1px solid #333 }
+#boardbook table td { padding:5px }
+
+#boardbook ul		{ width:100%; margin-top:20px }
+#boardbook ul li	{ width:100%; margin-top:10px }
+
+
+#boardbook.delete-form	{ height:200px }
+#boardbook.delete-form form {
+	width:300px;
+	padding:10px;
+	border:1px solid #666;
+	border-radius: 10px;
+	margin:50px auto;
+}
+#boardbook.delete-form a	{ display:block; margin:20px auto; width:110px }
+
+#boardbook.delete-message p	{ padding:100px; height:50px; text-align:center }
+
+#boardbook textarea#content	{ width: 100%; border:none; height: 100px; resize: none; outline: none; }

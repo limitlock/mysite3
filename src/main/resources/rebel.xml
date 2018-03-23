@@ -9,6 +9,8 @@
 	<classpath>
 		<dir name="D:/cafe24/workspace/mysite3/target/classes">
 		</dir>
+		<dir name="D:/cafe24/workspace/mysite3/target/test-classes">
+		</dir>
 	</classpath>
 
 	<web>

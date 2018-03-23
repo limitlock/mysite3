@@ -17,7 +17,7 @@
 		<div id="content">
 			<div id="board">
 				<form class="board-form" method="post" action="${pageContext.servletContext.contextPath }/board/write">
-					<input type="hidden" name="writerNo" value="${authUser.no }">
+					<input type="hidden" name="userNo" value="${authUser.no }">
 					<input type="hidden" name ="page" value = "${param.page }">
 					<table class="tbl-ex">
 						<tr>

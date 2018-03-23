@@ -56,4 +56,12 @@ public class GuestbookVo {
 		this.curDate = curDate;
 	}
 
+	@Override
+	public String toString() {
+		return "GuestbookVo [no=" + no + ", name=" + name + ", password=" + password + ", content=" + content
+				+ ", curDate=" + curDate + ", index=" + index + "]";
+	}
+	
+	
+
 }

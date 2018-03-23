@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cafe24.mysite.service.BoardService;
+import com.cafe24.mysite.service.CommentService;
 import com.cafe24.mysite.vo.BoardVo;
+import com.cafe24.mysite.vo.CommentVo;
 
 @Controller
 @RequestMapping("/board")
@@ -18,10 +20,13 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 
-	@RequestMapping("/list")
-	public String list(Model model, @RequestParam("page") String page) {
+	@Autowired
+	private CommentService commentService;
 
+	@RequestMapping("/list")
+	public String list(Model model, @RequestParam("page") Long page) {
 		boardService.list(model, page);
+		
 		return "/board/list";
 	}
 
@@ -38,11 +43,33 @@ public class BoardController {
 
 	@RequestMapping("/view")
 	public String view(Model model, @ModelAttribute BoardVo vo) {
-
+	
 		boardService.view(model, vo.getNo());
 		boardService.hit(vo);
+		commentService.commentList(model, vo.getNo());
 		return "board/view";
 	}
+	
+	@RequestMapping(value = "/commentinsert", method = RequestMethod.POST)
+	public String insert(@ModelAttribute CommentVo vo, @RequestParam("page") Integer page) {
+		System.out.println("boardcontroler ");
+		commentService.write(vo);
+		return "redirect:/board/view?page="+page+"&no="+vo.getNo();
+	}
+	@RequestMapping(value = "/commentdelete", method=RequestMethod.GET)
+	public String commentDelete() {
+		return "/board/commentdeleteform";
+	}
+	
+	@RequestMapping(value = "/commentdelete", method=RequestMethod.POST)
+	public String commentDelete(@ModelAttribute CommentVo vo, @RequestParam("page") Integer page) {
+	System.out.println("controller: "+vo);
+		commentService.delete(vo);
+		return "redirect:/board/view?page="+page+"&no="+vo.getBoardNo();
+	}
+	
+	
+	
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String delete() {
@@ -78,10 +105,11 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "search", method = RequestMethod.POST)
-	public String search(Model model, @RequestParam("kwd") String inputTitle) {
+	public String search(Model model, @RequestParam("kwd") String inputTitle, @RequestParam("page") Long page) {
 
-		boardService.search(model, inputTitle);
-
+		System.out.println("controller: " + page);
+		boardService.search(model, inputTitle, page);
+		System.out.println("controller: " + page);
 		return "/board/list";
 	}
 
@@ -93,6 +121,7 @@ public class BoardController {
 
 	@RequestMapping(value = "reply", method = RequestMethod.POST)
 	public String reply(@ModelAttribute BoardVo vo, @RequestParam("page") Integer page) {
+		System.out.println("controller : " + vo);
 		boardService.reply(vo);
 
 		return "redirect:/board/list?page=" + page;

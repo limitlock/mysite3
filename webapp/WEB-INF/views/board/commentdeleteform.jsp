@@ -15,8 +15,8 @@
 	<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="commentdeleteform" class="delete-form">
-				<form method="post" action="${pageContext.servletContext.contextPath }/comment">
-					<input type="hidden" name="a" value="delete">
+				<form method="post" action="${pageContext.servletContext.contextPath }/board/commentdelete">
+					<input type="hidden" name="page" value="${param.page }">
 					<input type='hidden' name="no" value="${param.no}">
 					<input type='hidden' name="boardNo" value="${param.boardNo}">
 					<label>비밀번호</label>

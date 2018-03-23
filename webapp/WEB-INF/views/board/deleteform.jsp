@@ -17,8 +17,8 @@
 		<div id="content">
 			<div id="guestbook" class="delete-form">
 				<h3>정말로 삭제하시겠습니까?</h3>
-				<form method="post" action="${pageContext.servletContext.contextPath }/board/delete?page=${param.page}">
-					<input type="hidden" name="a" value="delete"> 
+				<form method="post" action="${pageContext.servletContext.contextPath }/board/delete">
+					<input type="hidden" name="page" value="${param.page }"> 
 					<input type='hidden' name="userNo" value="${param.userNo}"> 
 					<input type='hidden' name="no" value="${param.no}"> 
 					<label>비밀번호</label><input type="password" name="password"> 

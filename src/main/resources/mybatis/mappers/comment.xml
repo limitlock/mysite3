@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="comment">
+
+	<select id="getList" parameterType="commentvo" resultType="commentvo">
+		<![CDATA[
+			select no, name, password, content, reg_date, board_no 
+			  from comment 
+			 where board_no = #{boardNo}
+		]]>
+	</select>
+
+	<insert id="write">
+		<![CDATA[
+			insert into comment 
+			values(null, #{name}, #{password}, #{content}, now(), #{no})
+		]]>
+	</insert>
+	
+	<delete id="commentdelete" parameterType="commentvo">
+		<![CDATA[
+			delete 
+			from comment 
+			where no = #{no} and password = #{password}
+		]]>
+	</delete>
+
+
+
+</mapper>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+
+	<select id="getList" parameterType="long" resultType="boardvo">
+		<![CDATA[
+			select b.no as no, 
+				   title, 
+				   reg_date as curDate, 
+				   hit, 
+				   a.name as user, 
+				   group_no as groupNo, 
+				   order_no as orderNo, 
+				   depth, 
+				   user_no as userNo
+			  from users a, board b
+			 where a.no = b.user_no
+		  order by group_no desc, order_no asc
+		     limit #{page}, 5
+		]]>
+	</select>
+
+	<select id="get" resultType="long">
+		<![CDATA[
+			select count(no) as maxNo from board
+		]]>
+	</select>
+
+
+	<insert id="insert" parameterType="boardvo">
+		<![CDATA[
+			insert 
+			  into board 
+			values(null, 
+				   #{title }, 
+				   #{content }, 
+				   (select if(isnull(group_no), 1, max(group_no)+1) from board a), 
+				   1, 0, now(),0, #{userNo})
+		]]>
+	</insert>
+
+	<delete id="delete" parameterType="boardvo">
+		<![CDATA[
+			delete 
+			from board 
+			where no = (select * 
+						  from (select b.no 
+						  		  from users a, board b 
+						  		  where a.no = b.user_no and a.no = #{userNo} 
+						  		  and b.no = #{no} 
+						  		  and password = password(#{password})) a)
+	
+	
+		]]>
+	</delete>
+
+	<update id="modify" parameterType="boardvo">
+		<![CDATA[
+			update board 
+			   set title = #{title}, content = #{content} 
+			 where no = #{no}
+		]]>
+	</update>
+
+	<select id="view" parameterType="boardvo" resultType="boardvo">
+		<![CDATA[
+			select no, title, content, user_no 
+			from board 
+			where no = #{no }
+		]]>
+	</select>
+
+	<update id="hit" parameterType="boardvo">
+		<![CDATA[
+			update board 
+			   set hit = (select * 
+			   				from ((select hit 
+			   						 from board  
+			   						 where no = #{no})) a)+1 
+			   				where no = #{no}
+		]]>
+	</update>
+
+	<select id="search" parameterType="map" resultType="boardvo">
+		<![CDATA[
+		select b.no as no, 
+			   title, 
+			   reg_date as curDate, 
+			   hit, 
+	 		   a.name as user, 
+			   group_no as groupNo, 
+		       order_no as orderNo, 
+			   depth, 
+			   user_no as userNo
+		  from users a, board b
+		 where a.no=b.user_no
+		   and title like #{inputTitle}
+	  order by group_no desc, order_no asc
+	     limit #{page} ,5
+		]]>
+	</select>
+
+
+	<select id="search_get" parameterType="string" resultType="long">
+		<![CDATA[
+			select count(no) 
+			  from board 
+			 where title like #{inputTitle}
+		]]>
+	</select>
+
+	<update id="reply_update" parameterType="boardvo">
+		<![CDATA[
+			
+update board 
+set order_no = order_no + 1 
+where group_no = (select * 
+					from (( select  group_no
+							  from board
+							 where no = #{no}))a) 
+and order_no > (select * 
+				  from((select order_no
+						 from board
+						where no = #{no}))b);
+		]]>
+	</update>
+
+	<insert id="reply_insert" parameterType="boardvo">
+		<![CDATA[
+			insert 
+			  into board  
+		    values(null, #{title}, #{content},(select * 
+												 from (( select  group_no
+							 							   from board
+														  where no = #{no}))a) , 
+											  (select * 
+				  								 from ((select order_no
+						 								  from board
+														 where no = #{no}))b)+1, 
+											  (select * 
+											     from (( select depth
+							  							   from board
+							 							  where no = #{no}))a) +1, 
+							 				  now(), 0, #{userNo})
+		]]>
+	</insert>
+
+</mapper>

@@ -15,11 +15,16 @@ public class BoardService {
 	@Autowired
 	private BoardDao boardDao;
 
-	public void list(Model model, String page) {
-		List<BoardVo> list = boardDao.getList(Integer.parseInt(page));
-		BoardVo maxNo = boardDao.get();
-		model.addAttribute("maxNo", maxNo.getMaxNo());
+	public void list(Model model, Long page) {
+		page = (page - 1) * 5;
+		List<BoardVo> list = boardDao.getList(page);
 		model.addAttribute("list", list);
+
+		Long maxNo = boardDao.get();
+		if(maxNo == 0) {
+			maxNo = 1L;
+		}
+		model.addAttribute("maxNo", maxNo);
 
 	}
 
@@ -28,8 +33,8 @@ public class BoardService {
 
 	}
 
-	public void view(Model model, Long no) {
-		List<BoardVo> list = boardDao.viewGetList(no);
+	public void view(Model model, Long boardNo) {
+		List<BoardVo> list = boardDao.viewGetList(boardNo);
 		model.addAttribute("list", list);
 	}
 
@@ -52,19 +57,22 @@ public class BoardService {
 		model.addAttribute("list", list);
 	}
 
-	public void search(Model model, String inputTitle) {
-
-		List<BoardVo> list = boardDao.search(inputTitle);
-		BoardVo maxNo = boardDao.searchGet(inputTitle);
-		model.addAttribute("maxNo", maxNo.getMaxNo());
+	public void search(Model model, String inputTitle, Long page) {
+		page = (page - 1) * 5;
+		inputTitle = "%" + inputTitle + "%";
+		List<BoardVo> list = boardDao.search(inputTitle, page);
+		Long maxNo = boardDao.searchGet(inputTitle);
+		model.addAttribute("maxNo", maxNo);
 		model.addAttribute("list", list);
 	}
 
 	public void reply(BoardVo vo) {
-
+		System.out.println("service : "+vo);
 		boardDao.replyUpdate(vo);
+		
 		boardDao.replyInsert(vo);
 
 	}
+	
 
 }

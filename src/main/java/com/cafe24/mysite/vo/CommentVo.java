@@ -65,4 +65,12 @@ public class CommentVo {
 		this.boardNo = boardNo;
 	}
 
+	@Override
+	public String toString() {
+		return "CommentVo [no=" + no + ", name=" + name + ", password=" + password + ", content=" + content
+				+ ", curDate=" + curDate + ", boardNo=" + boardNo + ", index=" + index + "]";
+	}
+
+	
+	
 }

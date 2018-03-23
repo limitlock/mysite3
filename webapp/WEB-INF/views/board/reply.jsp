@@ -21,7 +21,7 @@
 					<input type="hidden" name="groupNo" value="${param.groupNo }"> 
 					<input type="hidden" name="orderNo" value="${param.orderNo }"> 
 					<input type="hidden" name="depth" value="${param.depth }"> 
-					<input type="hidden" name="writerNo" value="${authUser.no }">   
+					<input type="hidden" name="userNo" value="${authUser.no }">   
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">답글쓰기</th>
