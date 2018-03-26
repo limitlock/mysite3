@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<charset>UTF-8</charset>
+			<Pattern>
+				%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n
+			</Pattern>
+		</encoder>
+	</appender>
+
+	<appender name="fileAppender2" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>c:\mysite3\logexample2.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>
+				%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n
+			</Pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<FileNamePattern>C:\LogExample\logexample2.%i.log.zip</FileNamePattern>
+			<MinIndex>1</MinIndex>
+			<MaxIndex>10</MaxIndex>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>50KB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+	
+	<appender name="fileAppender3" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>c:\mysite3\logexample3.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>
+				%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n
+			</Pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<FileNamePattern>C:\LogExample\logexample3.%i.log.zip</FileNamePattern>
+			<MinIndex>1</MinIndex>
+			<MaxIndex>10</MaxIndex>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>1MB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>	
+
+
+	
+	<!--
+		kr.co.saramin.logexample3 아래 패키지 로그들만  C:\LogExample\logexample3.log 파일과 콘솔로 출력하는 로거
+	-->
+	<logger name="com.cafe24"  level="warn" additivity="false">
+            <appender-ref ref="fileAppender3" />
+			<appender-ref ref="consoleAppender" />
+    </logger>    
+	
+	<!-- 루트(글로벌) 로거 (위에 설정된 logger에 걸리지 않으면 root에 마지막으로 걸려서 로그(log)를 출력한다.-->
+	<root level="warn">
+		<appender-ref ref="consoleAppender" />
+	</root>
+
+</configuration>
