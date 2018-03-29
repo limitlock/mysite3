@@ -19,7 +19,7 @@
 					<br>
 					다시 로그인 해주세요.
 					<br>
-					<a href="${pageContext.servletContext.contextPath }/user?a=loginform">로그인하기</a>
+					<a href="${pageContext.servletContext.contextPath }/user/login">로그인하기</a>
 				</p>				
 			</div>
 		</div>

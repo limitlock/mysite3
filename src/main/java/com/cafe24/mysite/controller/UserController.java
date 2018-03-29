@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cafe24.mysite.service.UserService;
 import com.cafe24.mysite.vo.UserVo;
+import com.cafe24.security.Auth;
+import com.cafe24.security.AuthUser;
 
 @Controller
 @RequestMapping("/user")
@@ -42,34 +44,36 @@ public class UserController {
 		return "user/login";
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(HttpSession session, @ModelAttribute UserVo vo, Model model) {
+	// @RequestMapping(value = "/login", method = RequestMethod.POST)
+	// public String login(HttpSession session, @ModelAttribute UserVo vo, Model
+	// model) {
+	//
+	// UserVo authUser = userService.getUser(vo);
+	//
+	// if (authUser == null) {
+	// model.addAttribute("result", "fail");
+	// return "user/login";
+	// }
+	//
+	// // 인증 처리
+	// session.setAttribute("authUser", authUser);
+	// return "redirect:/main";
+	// }
 
-		UserVo authUser = userService.getUser(vo);
+	// @RequestMapping(value = "/logout")
+	// public String logout(HttpSession session) {
+	// session.removeAttribute("authUser");
+	// return "redirect:/main";
+	// }
 
-		if (authUser == null) {
-			model.addAttribute("result", "fail");
-			return "user/login";
-		}
-
-		// 인증 처리
-		session.setAttribute("authUser", authUser);
-		return "redirect:/main";
-	}
-
-	@RequestMapping(value = "/logout")
-	public String logout(HttpSession session) {
-		session.removeAttribute("authUser");
-		return "redirect:/main";
-	}
-
+	@Auth
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
-	public String modify(HttpSession session) {
+	public String modify(@AuthUser UserVo authUser, Model model) {
 		// 접근 제어(나중에 이러한 코드를 어노테이션으로 만들어 제거시킨다 -> @Auth 이런식으로...
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if (authUser == null) {
-			return "redirect:/main";
-		}
+		// UserVo authUser = (UserVo) session.getAttribute("authUser");
+
+		UserVo vo = userService.getUser(authUser.getNo());
+		model.addAttribute("vo", vo);
 
 		return "user/modify";
 	}

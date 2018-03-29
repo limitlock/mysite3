@@ -31,12 +31,13 @@ public class UserDao {
 
 
 	public UserVo get(UserVo vo) throws UserDaoException { // 들어갈 값이 많다면 vo 를 넣어서 사용한다.
+		
 		return sqlSession.selectOne("user.getByEmailAndPassword", vo);
-
+		
 	}
 
 	public boolean insert(UserVo vo) {
-		int count = sqlSession.selectOne("user.insert", vo);
+		int count = sqlSession.insert("user.insert", vo);
 
 		return count == 1;
 	}

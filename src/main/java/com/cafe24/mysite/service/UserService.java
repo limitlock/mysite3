@@ -25,4 +25,9 @@ public class UserService {
 		userDao.update(vo);
 	}
 
+	public UserVo getUser(Long no) {
+		
+		return userDao.get(no);
+	}
+
 }
