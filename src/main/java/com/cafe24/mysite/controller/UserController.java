@@ -1,10 +1,12 @@
 package com.cafe24.mysite.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,13 +24,21 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
-	public String join() {
+	public String join(@ModelAttribute UserVo vo) {
 
 		return "user/join";
 	}
 
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String join(@ModelAttribute UserVo vo) {
+	public String join(@ModelAttribute @Valid UserVo vo, BindingResult result) { // BindingResult에 UserVo의 각 변수에 관한 검증
+																					// 결과가 들어가있다.
+		if (result.hasErrors()) {
+			/*
+			 * List<ObjectError> list = result.getAllErrors(); for (ObjectError error :
+			 * list) { System.out.println("Object Error: " + error); }
+			 */
+			return "user/join"; // BindingResult result도 포워딩되어 jsp로 넘어간다.
+		}
 		userService.join(vo);
 		return "redirect:/user/joinsuccess";
 	}
