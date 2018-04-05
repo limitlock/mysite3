@@ -7,23 +7,45 @@
 	<ul>
 		<c:choose>
 			<c:when test='${param.menu == "main" }'>
-				<li class="selected"><a href="${pageContext.servletContext.contextPath }/main">최종규</a></li>
+				<li class="selected"><a href="">최종규</a></li>
 				<li><a href="${pageContext.servletContext.contextPath }/guestbook/list">방명록</a></li>
+				<li><a href="${pageContext.servletContext.contextPath }/guestbook/ajax">방명록(ajax)</a></li>
+				<li><a href="${pageContext.servletContext.contextPath }/gallery/ajax">갤러리(ajax)</a></li>
 				<li><a href="${pageContext.servletContext.contextPath }/board/list?page=1">게시판</a></li>
 			</c:when>
 			<c:when test='${param.menu == "guestbook" }'>
 				<li><a href="${pageContext.servletContext.contextPath }/main">최종규</a></li>
-				<li class="selected"><a href="${pageContext.servletContext.contextPath }/guestbook/list">방명록</a></li>
+				<li class="selected"><a href="">방명록</a></li>
+				<li><a href="${pageContext.servletContext.contextPath }/guestbook/ajax">방명록(ajax)</a></li>
+				<li><a href="${pageContext.servletContext.contextPath }/gallery/ajax">갤러리(ajax)</a></li>
+				<li><a href="${pageContext.servletContext.contextPath }/board/list?page=1">게시판</a></li>
+			</c:when>
+			<c:when test='${param.menu == "guestbook-ajax" }'>
+				<li><a href="${pageContext.servletContext.contextPath }/main">최종규</a></li>
+				<li><a href="${pageContext.servletContext.contextPath }/guestbook/list">방명록</a></li>
+				<li class="selected"><a href="">방명록(ajax)</a></li>
+				<li><a href="${pageContext.servletContext.contextPath }/gallery/ajax">갤러리(ajax)</a></li>
+				<li><a href="${pageContext.servletContext.contextPath }/board/list?page=1">게시판</a></li>
+			</c:when>
+				<c:when test='${param.menu == "gallery" }'>
+				<li><a href="${pageContext.servletContext.contextPath }/main">최종규</a></li>
+				<li><a href="${pageContext.servletContext.contextPath }/guestbook/list">방명록</a></li>
+				<li><a href="${pageContext.servletContext.contextPath }/guestbook/ajax">방명록(ajax)</a></li>
+				<li class="selected"><a href="">갤러리(ajax)</a></li>
 				<li><a href="${pageContext.servletContext.contextPath }/board/list?page=1">게시판</a></li>
 			</c:when>
 			<c:when test='${param.menu == "board" }'>
 				<li><a href="${pageContext.servletContext.contextPath }/main">최종규</a></li>
 				<li><a href="${pageContext.servletContext.contextPath }/guestbook/list">방명록</a></li>
-				<li class="selected"><a href="${pageContext.servletContext.contextPath }/board/list?page=1">게시판</a></li>
+				<li><a href="${pageContext.servletContext.contextPath }/guestbook/ajax">방명록(ajax)</a></li>
+				<li><a href="${pageContext.servletContext.contextPath }/gallery/ajax">갤러리(ajax)</a></li>
+				<li class="selected">게시판</li>
 			</c:when>
 			<c:otherwise>
 				<li><a href="${pageContext.servletContext.contextPath }/main">최종규</a></li>
 				<li><a href="${pageContext.servletContext.contextPath }/guestbook/list">방명록</a></li>
+				<li><a href="${pageContext.servletContext.contextPath }/guestbook/ajax">방명록(ajax)</a></li>
+				<li><a href="${pageContext.servletContext.contextPath }/gallery/ajax">갤러리(ajax)</a></li>
 				<li><a href="${pageContext.servletContext.contextPath }/board/list?page=1">게시판</a></li>
 			</c:otherwise>
 		</c:choose>

@@ -46,7 +46,32 @@ $(function() {
 			}
 		});
 	});
-});
+	
+
+	var form = document.getElementById("join-form");
+
+		form.onsubmit = function() {
+
+			var rbtnM = document.getElementById("rbtn-m");
+			var rbtnF = document.getElementById("rbtn-f");
+			
+			if(rbtnM.checked == false && rbtnF.checked == false){
+				alert("성별을 선택해주세요.");
+				return false;
+			}
+			
+			
+			
+			
+			var agreeProv = document.getElementById("agree-prov");
+			if (agreeProv.checked == false) {
+				alert("서비스 동의를 해주세요.");
+				return false;
+			}
+			return true;
+		}
+
+	});
 </script>
 </head>
 <body>
@@ -100,7 +125,6 @@ $(function() {
 					   			code="${errors.getFieldError('password').codes[0] }"
 					   			text="${errors.getFieldError('password').defaultMessage }"
 					   		</spring:message>
-					        <!--  <strong>${errors.getFieldError( 'password' ).defaultMessage }</strong>-->
 					        </p>
 					   </c:if>			
 					</spring:hasBindErrors>
@@ -108,8 +132,8 @@ $(function() {
 					
 					<fieldset>
 						<legend>성별</legend>
-						<label>여</label> <form:radiobutton path="gender" value="female"/>
-						<label>남</label> <form:radiobutton path="gender" value="male"/>
+						<label>여</label> <form:radiobutton id="rbtn-f" path="gender" value="female"/>
+						<label>남</label> <form:radiobutton id="rbtn-m" path="gender" value="male"/>
 					</fieldset>
 					
 					<fieldset>
