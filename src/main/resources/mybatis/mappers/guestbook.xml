@@ -3,6 +3,45 @@
 
 <mapper namespace="guestbook">
 
+
+	<select id="getList2" parameterType="long" resultType="guestbookvo">
+			<![CDATA[
+			select no, 
+				   name, 
+			       password, 
+				   content, 
+				   cur_date as curDate
+			  from guestbook
+			   ]]>
+			<if test="_parameter > 0">
+				   <![CDATA[
+				  	where #{_parameter} > no
+				  	]]>
+			</if>
+			     <![CDATA[
+		  order by cur_date desc
+		  limit 0, 5
+			 ]]>
+	</select>
+
+	
+
+	<select id="getByNo" parameterType="long" resultType="guestbookvo">
+		<![CDATA[
+		select no, 
+			   name, 
+		       password, 
+			   content, 
+			   cur_date as curDate
+		  from guestbook
+		 where no = #{no}
+		 ]]>
+	</select>
+
+
+
+
+
 	<select id="getList" resultType="guestbookvo">
 		<![CDATA[
 		select no, 
@@ -15,7 +54,7 @@
 		 ]]>
 	</select>
 
-	<delete id="delete" parameterType="map">
+	<delete id="delete" parameterType="guestbookvo">
 		<![CDATA[
 		delete 
 		  from guestbook 
@@ -23,6 +62,10 @@
 		   and password = #{password }
 		]]>
 	</delete>
+	
+	
+	
+	
 
 	<insert id="insert" parameterType="guestbookvo">
 		<![CDATA[

@@ -66,6 +66,9 @@ public class BoardService {
 		model.addAttribute("list", list);
 	}
 
+	
+	
+	
 	public void reply(BoardVo vo) {
 		System.out.println("service : "+vo);
 		boardDao.replyUpdate(vo);

@@ -107,9 +107,7 @@ public class BoardController {
 	@RequestMapping(value = "search", method = RequestMethod.POST)
 	public String search(Model model, @RequestParam("kwd") String inputTitle, @RequestParam("page") Long page) {
 
-		System.out.println("controller: " + page);
 		boardService.search(model, inputTitle, page);
-		System.out.println("controller: " + page);
 		return "/board/list";
 	}
 

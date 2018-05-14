@@ -27,14 +27,20 @@ public class GuestbookDao {
 	}
 
 	public int insert(GuestbookVo vo) {
-		System.out.println(vo);
 		int count = sqlSession.insert("guestbook.insert", vo);
-		System.out.println(vo);
 		return count;
 	}
 
 	public List<GuestbookVo> getList() {
 		return sqlSession.selectList("guestbook.getList");
+	}
+
+	public List<GuestbookVo> getList2(Long no) {
+		return sqlSession.selectList("guestbook.getList2",no);
+	}
+
+	public GuestbookVo get(Long no) {
+		return sqlSession.selectOne("guestbook.getByNo", no);
 	}
 
 }
