@@ -13,7 +13,7 @@ import com.cafe24.mysite.vo.UserVo;
 @Controller
 public class MainController {
 
-	@RequestMapping("/main")
+	@RequestMapping( { "/", "/main" } )
 	public String main() {
 		return "main/index";
 	}
